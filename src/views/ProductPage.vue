@@ -317,34 +317,35 @@ export default {
   },
   methods: {
     calculateAverageRating() {
-      const total = this.ratingCategories.reduce(
+      const totalRatings = this.ratingCategories.reduce(
         (sum, item) => sum + item.value,
         0
       );
-      return (total / this.ratingCategories.length).toFixed(1);
+      return (totalRatings / this.ratingCategories.length).toFixed(1);
     },
     submitFeedback() {
-      if (!this.newComment) {
-        alert("يرجى إضافة تعليق!");
-        return;
-      }
-
       this.ratingCategories.forEach((category, index) => {
-        const currentRating = this.ratings[index];
+        const currentRating = this.ratings[index]; // Match by index
         currentRating.stars = parseFloat(
           ((currentRating.stars + category.value) / 2).toFixed(1)
         );
       });
 
       const averageRating = parseFloat(this.calculateAverageRating());
-      const newFeedback = {
-        name: this.user.name,
-        avatar: this.user.avatar,
-        rating: averageRating,
-        text: this.newComment,
-      };
+      this.product.rating = parseFloat(
+        ((this.product.rating + averageRating) / 2).toFixed(1)
+      );
 
-      this.comments.push(newFeedback);
+      if (this.newComment) {
+        const newFeedback = {
+          name: this.user.name,
+          avatar: this.user.avatar,
+          rating: averageRating,
+          text: this.newComment,
+        };
+        this.comments.push(newFeedback);
+      }
+
       this.resetPopup();
       this.dialog = false;
     },
