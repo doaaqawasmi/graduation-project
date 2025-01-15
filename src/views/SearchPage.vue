@@ -15,6 +15,22 @@
       </v-col>
     </v-row>
 
+    <v-container v-if="!searchQuery && searchHistory.length">
+      <v-row>
+        <h3>آخر عمليات البحث:</h3>
+      </v-row>
+      <v-row>
+        <v-chip
+          v-for="(query, index) in searchHistory"
+          :key="index"
+          class="mr-2"
+          @click="searchQuery = query"
+        >
+          {{ query }}
+        </v-chip>
+      </v-row>
+    </v-container>
+
     <!-- filteredCompanies (Show only after pressing Enter) -->
     <v-container>
       <v-row v-if="searchQuery && computedFilteredLists.length">
@@ -38,6 +54,27 @@
         <p>No results found for "{{ searchQuery }}".</p>
       </v-row>
     </v-container>
+
+    <!-- Section: Three Random Cards -->
+    <v-container style="margin-top: 50px">
+      <h1 class="text-center" style="color: #e28c0d">اكتشف المزيد</h1>
+      <v-row>
+        <v-col
+          v-for="(card, index) in randomCards"
+          :key="index"
+          cols="12"
+          md="4"
+        >
+          <CompanyCard
+            :image="card.image"
+            :title="card.title"
+            :rating="card.rating"
+            :location="card.location"
+            :description="card.description"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
   </v-container>
 </template>
 
@@ -52,6 +89,7 @@ export default {
   data() {
     return {
       searchQuery: "",
+      searchHistory: [],
       showResults: false,
       Companies: [
         {
@@ -129,7 +167,7 @@ export default {
             "يوفر فندق فورسيزونز عمّان مجموعة متنوعة من الغرف والأجنحة الفاخرة الحائزة على الجوائز .",
         },
         {
-          image: "photo/Hotel/steigenberger.jpg",
+          image: "photo/Hotel/SteigenbergerHotel/steigenberger.jpg",
           title: "فندق Steigenberger",
           rating: 4,
           location: "مصر",
@@ -253,7 +291,16 @@ export default {
             "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى.",
         },
       ],
+      randomCards: {
+        company: null,
+        hotel: null,
+        restaurant: null,
+        gym: null,
+      },
     };
+  },
+  mounted() {
+    this.generateRandomCards();
   },
   computed: {
     computedFilteredLists() {
@@ -284,6 +331,14 @@ export default {
     performSearch() {
       if (this.searchQuery.trim() !== "") {
         this.showResults = true;
+        // Add the query to the history if it's not a duplicate
+        if (!this.searchHistory.includes(this.searchQuery.trim())) {
+          this.searchHistory.unshift(this.searchQuery.trim());
+        }
+        // Limit the history to the last 5 searches
+        if (this.searchHistory.length > 5) {
+          this.searchHistory.pop();
+        }
       } else {
         this.showResults = false;
       }
@@ -294,6 +349,15 @@ export default {
         item.location.toLowerCase().includes(query) ||
         item.description.toLowerCase().includes(query)
       );
+    },
+    generateRandomCards() {
+      this.randomCards.company = this.getRandomItem(this.Companies);
+      this.randomCards.hotel = this.getRandomItem(this.hotels);
+      this.randomCards.restaurant = this.getRandomItem(this.restorants);
+      this.randomCards.gym = this.getRandomItem(this.Gym);
+    },
+    getRandomItem(array) {
+      return array[Math.floor(Math.random() * array.length)];
     },
   },
 };

@@ -12,6 +12,8 @@ import BusinessInfo1 from "@/views/BusinessInfo1.vue";
 import BusinessInfo2 from "@/views/BusinessInfo2.vue";
 import ForgetPass from "@/views/ForgetPass.vue";
 import SportPage from "@/views/SportPage.vue";
+import UserProfile from "@/views/UserProfile.vue";
+import UserBizProfile from "@/views/UserBizProfile.vue";
 
 Vue.use(VueRouter);
 
@@ -75,6 +77,16 @@ const routes = [
     path: "/Sport",
     name: "SportPage",
     component: SportPage,
+  },
+  {
+    path: "/UserProfile",
+    name: "UserProfile",
+    component: UserProfile,
+  },
+  {
+    path: "/UserBizProfile",
+    name: "UserBizProfile",
+    component: UserBizProfile,
   },
 ];
 

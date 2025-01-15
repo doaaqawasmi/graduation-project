@@ -57,6 +57,7 @@ export default {
           location: "الأردن",
           description:
             "البقالة والمواد التموينية · الأطعمة والوجبات الجاهزة · الأطعمة الصحية ومكملات الغذائية...",
+          isFavorite: false,
         },
         {
           image: "photo/Companies/saraio.jpg",
@@ -65,6 +66,7 @@ export default {
           location: "فلسطين",
           description:
             "مجموعة مصانع سرايو الوادية للصناعات الغذائية شركة رائدة في صناعة المواد الغذائية تاسست عام 1985.",
+          isFavorite: false,
         },
         {
           image: "photo/Companies/bank.jpg",
@@ -73,6 +75,7 @@ export default {
           location: "مصر",
           description:
             "معدلات عائد الأوعية الادخارية · افتتاح فرع البنك الجديد بمصر الجديدة",
+          isFavorite: false,
         },
         {
           image: "photo/Companies/jwwal.jpg",
@@ -81,6 +84,7 @@ export default {
           location: "فلسطين",
           description:
             "اطلبيها الآن بأوفر الأسعار من خلال متجر جوال الإلكتروني وبكل سهولة.",
+          isFavorite: false,
         },
         {
           image: "photo/Companies/jeeny.jpg",
@@ -89,6 +93,7 @@ export default {
           location: "الأردن",
           description:
             "التنقّل مع جيني. تنقّل ووفّر بأمان وراحة! شركاؤنا العديدون متوفّرون دائمًا لخدمتك!",
+          isFavorite: false,
         },
         {
           image: "photo/Companies/egyptair.jpg",
@@ -97,6 +102,7 @@ export default {
           location: "مصر",
           description:
             "أول شركة طيران في الشرق الأوسط وأفريقيا سافر مع المصرية واستمتع بالرفاهية والراحة والخدمات المميزة!",
+          isFavorite: false,
         },
       ],
     };

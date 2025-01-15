@@ -80,13 +80,43 @@
                   :key="index"
                   class="rating-row"
                 >
+                  <!-- rating -->
                   <v-rating
                     v-model="ratingItem.value"
                     color="amber"
                     background-color="grey lighten-2"
                   ></v-rating>
-                  <span class="rating-title">{{ ratingItem.label }}</span>
+                  <!-- text-->
+                  <v-text-field
+                    v-if="ratingItem.isEditable"
+                    v-model="ratingItem.label"
+                    placeholder="اسم التصنيف"
+                    dense
+                    class="rating-title"
+                  ></v-text-field>
+                  <span v-else class="rating-title">
+                    {{ ratingItem.label }}
+                  </span>
+                  <v-col cols="4" class="text-right">
+                    <!-- The close button only appears if the axis is editable -->
+                    <v-btn
+                      v-if="ratingItem.isEditable"
+                      icon
+                      color="red"
+                      @click="removeRatingAxis(index)"
+                    >
+                      <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                  </v-col>
                 </v-col>
+              </v-row>
+
+              <!-- Add New Rating Axis Button -->
+              <v-row justify="right" style="margin-top: 20px">
+                <v-btn color="#ffa726" text @click="addNewRatingAxis">
+                  <v-icon>mdi-plus</v-icon>
+                  إضافة محور تقييم جديد
+                </v-btn>
               </v-row>
             </v-card-text>
 
@@ -145,6 +175,9 @@
               </v-col>
               <v-col class="rathingname">
                 <span class="rating-title">{{ rating.name }}</span>
+                <span v-if="rating.addedBy" class="added-by-text">
+                  تمت اضافة هذا التقييم بواسطة {{ rating.addedBy }}
+                </span>
               </v-col>
             </v-row>
           </v-col>
@@ -258,11 +291,11 @@ export default {
         avatar: "photo/commentsgirl.png",
       },
       ratingCategories: [
-        { label: "الموقع", value: 0 },
-        { label: "الخدمة", value: 0 },
-        { label: "الإنترنت", value: 0 },
-        { label: "النظافة", value: 0 },
-        { label: "القرب على المواصلات", value: 0 },
+        { label: "الموقع", value: 0, isEditable: false },
+        { label: "الخدمة", value: 0, isEditable: false },
+        { label: "الإنترنت", value: 0, isEditable: false },
+        { label: "النظافة", value: 0, isEditable: false },
+        { label: "القرب على المواصلات", value: 0, isEditable: false },
       ],
       product: {
         images: [
@@ -314,26 +347,44 @@ export default {
     };
   },
   methods: {
-    calculateAverageRating() {
-      const totalRatings = this.ratingCategories.reduce(
-        (sum, item) => sum + item.value,
-        0
-      );
-      return (totalRatings / this.ratingCategories.length).toFixed(1);
+    addNewRatingAxis() {
+      this.ratingCategories.push({ label: "", value: 0, isEditable: true });
     },
+
+    removeRatingAxis(index) {
+      // إزالة المحور من القائمة
+      this.ratingCategories.splice(index, 1);
+    },
+
     submitFeedback() {
-      this.ratingCategories.forEach((category, index) => {
-        const currentRating = this.ratings[index]; // Match by index
-        currentRating.stars = parseFloat(
-          ((currentRating.stars + category.value) / 2).toFixed(1)
+      // Integrating new axes into ratings
+      this.ratingCategories.forEach((category) => {
+        const existingRating = this.ratings.find(
+          (rating) => rating.name === category.label
         );
+
+        if (existingRating) {
+          // Update rating if its already exist
+          existingRating.stars = parseFloat(
+            ((existingRating.stars + category.value) / 2).toFixed(1)
+          );
+        } else if (category.label) {
+          // add new rating
+          this.ratings.push({
+            name: category.label,
+            stars: category.value,
+            addedBy: this.user.name,
+          });
+        }
       });
 
+      // Average Rating Calculation
       const averageRating = parseFloat(this.calculateAverageRating());
       this.product.rating = parseFloat(
         ((this.product.rating + averageRating) / 2).toFixed(1)
       );
 
+      // Add comment if entered
       if (this.newComment) {
         const newFeedback = {
           name: this.user.name,
@@ -344,17 +395,28 @@ export default {
         this.comments.push(newFeedback);
       }
 
+      // Reset values and close popup
       this.resetPopup();
       this.dialog = false;
     },
+
     resetPopup() {
       this.newComment = "";
+      this.ratingCategories = this.ratingCategories.filter(
+        (item) => !item.isEditable || item.label
+      ); // Delete incomplete axes
       this.ratingCategories.forEach((item) => (item.value = 0));
     },
-    goToWebsite(url) {
-      window.open(url, "_blank");
+
+    calculateAverageRating() {
+      const totalRatings = this.ratingCategories.reduce(
+        (sum, item) => sum + item.value,
+        0
+      );
+      return (totalRatings / this.ratingCategories.length).toFixed(1);
     },
   },
+
   components: {
     MapComponent,
   },
@@ -574,5 +636,12 @@ export default {
 
 .clickable {
   cursor: pointer;
+}
+
+.added-by-text {
+  font-size: 14px;
+  color: #7f8c8d;
+  margin-right: 10px;
+  display: block;
 }
 </style>

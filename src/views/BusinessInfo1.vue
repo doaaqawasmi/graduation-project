@@ -33,49 +33,66 @@
                       :rules="field.rules"
                       v-model="field.model"
                       :type="field.type || 'text'"
-                      class="displ"
+                      class="displ social"
                     ></v-text-field>
                   </v-col>
                 </v-row>
 
                 <!-- Description Field (Full Width) -->
-                <p class="pargraph-name busnam">
-                  وصف العمل
-                  <v-icon color="red">*</v-icon>
-                </p>
-                <v-text-field
-                  label="وصف العمل"
-                  placeholder="أكتب مفصل عن العمل"
-                  solo
-                  :rules="[rules.required]"
-                  v-model="workDescription"
-                  type="text"
-                  class="displ"
-                ></v-text-field>
+                <v-col style="padding-left: 0; padding-right: 0">
+                  <p class="pargraph-name busnam">
+                    وصف العمل
+                    <v-icon color="red">*</v-icon>
+                  </p>
+                  <v-text-field
+                    label="وصف العمل"
+                    placeholder="أكتب مفصل عن العمل"
+                    solo
+                    :rules="[rules.required]"
+                    v-model="workDescription"
+                    type="text"
+                    class="displ social"
+                  ></v-text-field>
+                </v-col>
 
-                <p class="pargraph-name busnam mb-3">
-                  روابط وسائل التواصل الإجتماعي (إن وجد)
-                </p>
+                <v-col>
+                  <p class="pargraph-name busnam mb-3">
+                    روابط وسائل التواصل الإجتماعي (إن وجد)
+                  </p>
 
-                <v-col v-for="(social, index) in socialLinks" :key="index">
                   <v-row cols="12">
-                    <p class="pargraph-name busnam">{{ social.label }}</p>
-                    <v-text-field
-                      :label="social.label"
-                      :placeholder="social.placeholder"
-                      solo
-                      v-model="social.model"
-                      class="social"
-                    ></v-text-field>
+                    <v-col
+                      v-for="(social, index) in socialLinks"
+                      :key="index"
+                      cols="12"
+                    >
+                      <v-row align="center">
+                        <v-col cols="2" class="text-end" style="padding: 0">
+                          <p class="pargraph-name busnam">{{ social.label }}</p>
+                        </v-col>
+                        <v-col cols="10" style="padding: 0">
+                          <v-text-field
+                            :label="social.label"
+                            :placeholder="social.placeholder"
+                            solo
+                            v-model="social.model"
+                            class="social"
+                            type="url"
+                          ></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </v-col>
                   </v-row>
                 </v-col>
 
-                <a class="forgot-password" @click="validateForm">
-                  التالي
-                  <v-btn icon color="#ffa726">
-                    <v-icon>mdi-arrow-right</v-icon>
-                  </v-btn>
-                </a>
+                <v-col style="padding-top: 30px">
+                  <a class="forgot-password" @click="validateForm">
+                    التالي
+                    <v-btn icon color="#ffa726">
+                      <v-icon>mdi-arrow-right</v-icon>
+                    </v-btn>
+                  </a>
+                </v-col>
               </v-form>
             </v-col>
           </v-row>
@@ -223,7 +240,7 @@ export default {
   } */
 
   .pargraph-name {
-    font-size: small !important;
+    font-size: medium !important;
   }
 
   .button {
@@ -236,7 +253,7 @@ export default {
 
   .displ,
   .social {
-    font-size: small;
+    font-size: medium;
   }
 }
 </style>

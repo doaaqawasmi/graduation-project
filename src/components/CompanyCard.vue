@@ -8,7 +8,17 @@
     >
       <v-img :src="image" height="170"></v-img>
 
-      <v-card-title>{{ title }}</v-card-title>
+      <v-card-title>
+        <span>{{ title }}</span>
+        <v-spacer></v-spacer>
+        <v-icon
+          :color="isFavoriteInternal ? '#FF5A58' : 'grey lighten-1'"
+          class="ml-3"
+          @click="toggleFavorite"
+        >
+          {{ isFavoriteInternal ? "mdi-heart" : "mdi-heart-outline" }}
+        </v-icon>
+      </v-card-title>
 
       <v-card-text>
         <v-row align="center" class="mx-0">
@@ -49,6 +59,24 @@
 
 <script>
 export default {
+  data() {
+    return {
+      isFavoriteInternal: this.isFavorite, // Internal favorite state
+    };
+  },
+  methods: {
+    toggleFavorite() {
+      // Toggle the internal state and emit an event to the parent
+      this.isFavoriteInternal = !this.isFavoriteInternal;
+      this.$emit("update:isFavorite", this.isFavoriteInternal);
+    },
+  },
+  watch: {
+    isFavorite(newVal) {
+      // Update internal state if prop changes
+      this.isFavoriteInternal = newVal;
+    },
+  },
   name: "CompanyCard",
   props: {
     image: String,
@@ -70,6 +98,10 @@ export default {
     loading: {
       type: Boolean,
       default: false,
+    },
+    isFavorite: {
+      type: Boolean,
+      default: false, // Default state is not favorite
     },
   },
 };

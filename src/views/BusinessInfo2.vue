@@ -5,7 +5,7 @@
         <v-container>
           <v-row justify="center">
             <v-col cols="12" md="8">
-              <v-form ref="form" v-model="valid">
+              <v-form ref="form" v-model="valid" style="padding-top: inherit">
                 <p class="pargraph-name busnam titlebus">مميزات إضافية</p>
 
                 <!-- Loop through checkboxes -->
@@ -93,18 +93,23 @@
                     placeholder="الشارع - المدينة"
                     solo
                     :rules="[rules.required]"
+                    type="text"
                   ></v-text-field>
                 </v-col>
 
                 <v-col class="">
                   <v-row>
-                    <p class="pargraph-name busnam titlebus">
+                    <p
+                      class="pargraph-name busnam titlebus"
+                      style="padding-bottom: 15px"
+                    >
                       أدخل الإحداثيات لموقع العمل
                       <a
                         href="https://www.latlong.net/"
                         class="link"
                         style="font-size: medium"
                         target="_blank"
+                        type="text"
                       >
                         (يمكنك الحصول علبهم من هذا الموقع latlong.net)
                       </a>
@@ -120,6 +125,7 @@
                           placeholder="latitude"
                           solo
                           :rules="[rules.required]"
+                          type="number"
                         ></v-text-field>
                       </v-col>
                       <v-col>
@@ -132,6 +138,7 @@
                           placeholder="longitude"
                           solo
                           :rules="[rules.required]"
+                          type="number"
                         ></v-text-field>
                       </v-col>
                     </v-row>

@@ -3,7 +3,9 @@
     <v-row align="center" justify="space-between">
       <!-- Logo -->
       <v-col cols="auto">
-        <v-img width="220" height="50" src="photo/Logo/logoBizA.png" />
+        <a href="/">
+          <v-img width="220" height="50" src="photo/Logo/logoBizA.png" />
+        </a>
       </v-col>
 
       <!-- Navigation Links for Large Screens -->
@@ -22,17 +24,25 @@
       <!-- Actions -->
       <v-col cols="auto" class="d-none d-md-flex align-center">
         <v-btn
-          v-for="(item, index) in buttons"
-          :key="index"
-          :icon="item.icon"
-          :outlined="item.outlined"
-          :color="item.color"
-          :to="item.link"
+          icon
+          color="#e28c0d"
+          to="/Search"
           class="ml-4 buttons text-orange--text"
-          :style="item.style"
+          style="background-color: transparent"
         >
-          <v-icon v-if="item.icon">{{ item.iconName }}</v-icon>
-          {{ item.label }}
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+        <v-btn
+          v-if="!userName"
+          outlined
+          color="#e28c0d"
+          class="ml-4 buttons text-orange--text"
+          to="/Login"
+        >
+          تسجيل دخول
+        </v-btn>
+        <v-btn text v-else style="color: #e28c0d" to="/UserProfile">
+          {{ userName }}
         </v-btn>
       </v-col>
 
@@ -76,8 +86,15 @@
 </template>
 
 <script>
+import { globalState } from "../state";
+
 export default {
   name: "HeaderNavigation",
+  computed: {
+    userName() {
+      return globalState.userName; // Access the shared state
+    },
+  },
   data() {
     return {
       menuItems: [
@@ -89,35 +106,6 @@ export default {
       ],
       loginText: "تسجيل دخول",
       languageText: "English",
-      buttons: [
-        {
-          label: "",
-          icon: true,
-          iconName: "mdi-magnify",
-          color: "#e28c0d",
-          outlined: false,
-          link: "/Search",
-          style: { backgroundColor: "transparent" },
-        },
-        {
-          label: "تسجيل دخول",
-          icon: false,
-          iconName: "",
-          color: "#e28c0d",
-          outlined: true,
-          link: "/Login",
-          style: {},
-        },
-        // {
-        //   label: "English",
-        //   icon: false,
-        //   iconName: "",
-        //   color: "#e28c0d",
-        //   outlined: true,
-        //   link: "",
-        //   style: {},
-        // },
-      ],
     };
   },
 };

@@ -33,6 +33,7 @@
                   solo
                   v-model="email"
                   :rules="[rules.required, rules.email]"
+                  type="email"
                 ></v-text-field>
                 <p class="forth-p">
                   كلمة السر
@@ -120,7 +121,7 @@ export default {
 <style>
 .image {
   max-width: 100%;
-  max-height: 100%;
+  height: fit-content !important;
 }
 
 .login-page {
@@ -189,7 +190,7 @@ export default {
 }
 
 .fill-height {
-  height: 100%;
+  height: fit-content;
 }
 
 .button {

@@ -31,7 +31,9 @@
                   label="الإسم بالكامل"
                   placeholder="أدخل إسمك بالكامل"
                   solo
+                  type="text"
                   :rules="[rules.required]"
+                  v-model="name"
                 ></v-text-field>
                 <p class="pargraph-name">
                   البريد الإلكتروني
@@ -43,6 +45,7 @@
                   v-model="email"
                   :rules="[rules.required, rules.email]"
                   solo
+                  type="email"
                 ></v-text-field>
                 <p class="pargraph-name">
                   كلمة السر
@@ -111,10 +114,14 @@
 </template>
 
 <script>
+import { globalState } from "../state";
+
 export default {
   data() {
     return {
       valid: false,
+      name: "", // Bind this to the input field for "الإسم بالكامل"
+      email: "",
       street: "",
       password: "",
       confirmPassword: "",
@@ -148,6 +155,7 @@ export default {
     },
     validateForm() {
       if (this.$refs.form.validate()) {
+        globalState.userName = this.name;
         this.$router.push("/");
       } else {
         alert("الرجاء ملء جميع الحقول المطلوبة.");
@@ -155,6 +163,7 @@ export default {
     },
     validateForm1() {
       if (this.$refs.form.validate()) {
+        globalState.userName = this.name;
         this.$router.push("/Business1");
       } else {
         alert("الرجاء ملء جميع الحقول المطلوبة.");
