@@ -298,7 +298,6 @@ export default {
 
 .preview-image {
   max-width: 100%;
-  /* max-height: 100%; */
   object-fit: cover;
   border-radius: 8px;
 }

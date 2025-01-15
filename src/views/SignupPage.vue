@@ -127,6 +127,7 @@ export default {
       confirmPassword: "",
       showPassword: false,
       showConfirmPassword: false,
+      isBusinessUser: false,
       rules: {
         required: (value) => !!value || "هذا الحقل مطلوب",
         strongPassword: (value) =>
@@ -156,6 +157,7 @@ export default {
     validateForm() {
       if (this.$refs.form.validate()) {
         globalState.userName = this.name;
+        globalState.isBusinessUser = false;
         this.$router.push("/");
       } else {
         alert("الرجاء ملء جميع الحقول المطلوبة.");
@@ -164,6 +166,7 @@ export default {
     validateForm1() {
       if (this.$refs.form.validate()) {
         globalState.userName = this.name;
+        globalState.isBusinessUser = true;
         this.$router.push("/Business1");
       } else {
         alert("الرجاء ملء جميع الحقول المطلوبة.");

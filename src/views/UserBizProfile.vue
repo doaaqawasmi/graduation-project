@@ -37,9 +37,20 @@
                 </v-btn>
               </v-col>
             </v-row>
-            <!-- </v-form>  
-          <v-form> -->
-            <v-row>
+
+            <!-- Save Button -->
+            <v-row justify="start" class="mt-4">
+              <v-btn
+                color="warning"
+                class="text-white"
+                @click="saveChanges"
+                style="width: 170px; font-size: larger"
+              >
+                حفظ التعديلات
+              </v-btn>
+            </v-row>
+
+            <v-row class="mt-15">
               <h1 class="text-right">معلومات شركتك:</h1>
             </v-row>
             <!-- Email Section -->
@@ -62,36 +73,72 @@
                 ></v-text-field>
               </v-col>
               <v-col>
-                <v-btn
+                <!-- <v-btn
                   color="teal"
                   class="ml-3"
                   style="color: white; width: 100px"
                   @click="editCompanyField(index)"
                 >
                   تعديل
-                </v-btn>
+                </v-btn> -->
               </v-col>
             </v-row>
 
-            <!-- Save Button -->
-            <v-row justify="start" class="mt-4">
-              <v-btn
-                color="warning"
-                class="text-white"
-                @click="saveChanges"
-                style="width: 150px"
-              >
-                حفظ التعديلات
-              </v-btn>
+            <v-row class="mt-15">
+              <h2 class="text-right">روابط وسائل التواصل الإجتماعي:</h2>
+            </v-row>
+            <!-- Email Section -->
+            <v-row
+              v-for="(field, index) in SocialFields"
+              :key="index"
+              align="center"
+              class="mt-4"
+            >
+              <v-col>
+                <h3 class="text-right">{{ field.label }}</h3>
+              </v-col>
+              <v-col>
+                <v-text-field
+                  v-model="field.value"
+                  class="flex-grow-1 SocialFields"
+                  :label="field.placeholder"
+                  solo
+                  :disabled="!field.editable"
+                ></v-text-field>
+              </v-col>
+              <v-col>
+                <!-- <v-btn
+                  color="teal"
+                  class="ml-3"
+                  style="color: white; width: 100px"
+                  @click="editSocialField(index)"
+                >
+                  تعديل
+                </v-btn> -->
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <h2 class="text-right mt-10">صور العمل:</h2>
+            </v-row>
+
+            <v-row>
+              <v-col v-for="(image, index) in images" :key="index">
+                <img
+                  :src="image.src"
+                  alt="Product Image"
+                  class="product-image1"
+                />
+              </v-col>
             </v-row>
           </v-form>
         </v-col>
       </v-row>
     </v-container>
 
-    <v-container style="padding-top: 70px">
+    <v-container>
       <v-row>
-        <v-row>
+        <v-row class="mt-10">
           <h1 class="text-right">الأعمال التي أعجبتك:</h1>
         </v-row>
       </v-row>
@@ -129,6 +176,8 @@ export default {
     return {
       email: "noor@gmail.com",
       fullName: "نور علي",
+      preview: null,
+      files: [],
       editableFields: {
         email: false,
         name: false,
@@ -214,6 +263,45 @@ export default {
           value: "الرمال-غزة",
           editable: false,
         },
+        {
+          label: "Latitude",
+          placeholder: "Latitude",
+          value: "26.848043",
+          editable: false,
+        },
+        {
+          label: "Longitude",
+          placeholder: "Longitude",
+          value: "33.987627",
+          editable: false,
+        },
+      ],
+      SocialFields: [
+        {
+          label: "Facebook",
+          placeholder: "Facebook",
+          value: "هذا النص هو مثال لنص يمكن أن يستبدل في نفس  النص العربى.",
+          editable: false,
+        },
+        {
+          label: "Instagram",
+          placeholder: "Instagram",
+          value: "هذا النص هو مثال لنص يمكن أن يستبدل في نفس  النص العربى.",
+          editable: false,
+        },
+        {
+          label: "Twitter",
+          placeholder: "Twitter",
+          value: "هذا النص هو مثال لنص يمكن أن يستبدل في نفس  النص العربى.",
+          editable: false,
+        },
+      ],
+      images: [
+        { src: "photo/Hotel/SteigenbergerHotel/steigenberger.jpg" },
+        { src: "photo/Hotel/SteigenbergerHotel/steigenberger-brakefast.jpg" },
+        { src: "photo/Hotel/SteigenbergerHotel/steigenberger-food.jpg" },
+        { src: "photo/Hotel/SteigenbergerHotel/steigenberger-pool.jpg" },
+        { src: "photo/Hotel/SteigenbergerHotel/steigenberger-room.jpg" },
       ],
     };
   },
@@ -231,6 +319,13 @@ export default {
         this.companyFields[index],
         "editable",
         !this.companyFields[index].editable
+      );
+    },
+    editSocialField(index) {
+      this.$set(
+        this.SocialFields[index],
+        "editable",
+        !this.SocialFields[index].editable
       );
     },
     saveChanges() {
@@ -253,4 +348,57 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.SocialFields {
+  color: cornflowerblue;
+}
+
+.product-image1 {
+  height: 150px;
+  width: 200px;
+  border-radius: 5px;
+}
+
+.file-upload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.upload-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+.file-input {
+  display: none;
+}
+
+.add-photo-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px;
+}
+
+.plusButton {
+  border-radius: 50% !important;
+  height: 70px !important;
+  width: 70px !important;
+  color: white !important;
+  background-color: #49bf5a !important;
+}
+</style>

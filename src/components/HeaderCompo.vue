@@ -41,7 +41,12 @@
         >
           تسجيل دخول
         </v-btn>
-        <v-btn text v-else style="color: #e28c0d" to="/UserProfile">
+        <v-btn
+          text
+          v-else
+          style="color: #e28c0d"
+          :to="isBusinessUser ? '/userbizprofile' : '/userprofile'"
+        >
           {{ userName }}
         </v-btn>
       </v-col>
@@ -68,15 +73,25 @@
                 <v-icon>mdi-magnify</v-icon>
               </v-btn>
               <v-btn
+                v-if="!userName"
                 outlined
                 color="#e28c0d"
                 class="ml-4 buttons text-orange--text"
+                to="/Login"
               >
-                {{ loginText }}
+                تسجيل دخول
               </v-btn>
-              <v-btn outlined color="#e28c0d" class="buttons text-orange--text">
+              <v-btn
+                text
+                v-else
+                style="color: #e28c0d"
+                :to="isBusinessUser ? '/userbizprofile' : '/userprofile'"
+              >
+                {{ userName }}
+              </v-btn>
+              <!-- <v-btn outlined color="#e28c0d" class="buttons text-orange--text">
                 {{ languageText }}
-              </v-btn>
+              </v-btn> -->
             </v-list-item>
           </v-list>
         </v-menu>
@@ -92,7 +107,10 @@ export default {
   name: "HeaderNavigation",
   computed: {
     userName() {
-      return globalState.userName; // Access the shared state
+      return globalState.userName;
+    },
+    isBusinessUser() {
+      return globalState.isBusinessUser;
     },
   },
   data() {
