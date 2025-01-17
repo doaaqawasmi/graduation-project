@@ -24,6 +24,7 @@
                   :label="field.placeholder"
                   solo
                   :disabled="!field.editable"
+                  :type="field.type"
                 ></v-text-field>
               </v-col>
               <v-col>
@@ -122,12 +123,14 @@ export default {
           placeholder: "البريد الإلكتروني الخاص بك",
           value: "noor@gmail.com",
           editable: false,
+          type: "email",
         },
         {
           label: "إسمك بالكامل",
           placeholder: "إسمك بالكامل",
           value: "نور علي",
           editable: false,
+          type: "fullname",
         },
       ],
     };

@@ -24,6 +24,7 @@
                   :label="field.placeholder"
                   solo
                   :disabled="!field.editable"
+                  :type="field.type"
                 ></v-text-field>
               </v-col>
               <v-col>
@@ -70,6 +71,7 @@
                   :label="field.placeholder"
                   solo
                   :disabled="!field.editable"
+                  :type="field.type"
                 ></v-text-field>
               </v-col>
               <v-col>
@@ -104,6 +106,7 @@
                   :label="field.placeholder"
                   solo
                   :disabled="!field.editable"
+                  :type="field.type"
                 ></v-text-field>
               </v-col>
               <v-col>
@@ -206,12 +209,14 @@ export default {
           placeholder: "البريد الإلكتروني الخاص بك",
           value: "noor@gmail.com",
           editable: false,
+          type: "email",
         },
         {
           label: "إسمك بالكامل",
           placeholder: "إسمك بالكامل",
           value: "نور علي",
           editable: false,
+          type: "fullname",
         },
       ],
       companyFields: [
@@ -220,60 +225,70 @@ export default {
           placeholder: "البريد الإلكتروني الخاص بالعمل",
           value: "Jawwal@gmail.com",
           editable: false,
+          type: "email",
         },
         {
           label: "إسم العمل",
           placeholder: "إسم العمل",
           value: "شركة جوال",
           editable: false,
+          type: "name",
         },
         {
           label: "رقم الهاتف الخاص بالعمل",
           placeholder: "رقم الهاتف الخاص بالعمل",
           value: "05955646879",
           editable: false,
+          type: "number",
         },
         {
           label: "الموقع الإلكتروني للعمل ",
           placeholder: "الموقع الإلكتروني للعمل ",
           value: "http://jawwal",
           editable: false,
+          type: "url",
         },
         {
           label: "نوع العمل",
           placeholder: "نوع العمل",
           value: "شركة",
           editable: false,
+          type: "text",
         },
         {
           label: "أوقات العمل",
           placeholder: "أوقات العمل",
           value: "الاثنين - الجمعة: 9 صباحًا - 6 مساءً",
           editable: false,
+          type: "text",
         },
         {
           label: "وصف العمل",
           placeholder: "وصف العمل",
           value: "هذا النص هو مثال لنص يمكن أن يستبدل في نفس  النص العربى.",
           editable: false,
+          type: "text",
         },
         {
           label: "العنوان الفعلي للعمل",
           placeholder: "العنوان الفعلي للعمل ",
           value: "الرمال-غزة",
           editable: false,
+          type: "text",
         },
         {
           label: "Latitude",
           placeholder: "Latitude",
           value: "26.848043",
           editable: false,
+          type: "number",
         },
         {
           label: "Longitude",
           placeholder: "Longitude",
           value: "33.987627",
           editable: false,
+          type: "number",
         },
       ],
       SocialFields: [
@@ -282,18 +297,21 @@ export default {
           placeholder: "Facebook",
           value: "هذا النص هو مثال لنص يمكن أن يستبدل في نفس  النص العربى.",
           editable: false,
+          type: "url",
         },
         {
           label: "Instagram",
           placeholder: "Instagram",
           value: "هذا النص هو مثال لنص يمكن أن يستبدل في نفس  النص العربى.",
           editable: false,
+          type: "url",
         },
         {
           label: "Twitter",
           placeholder: "Twitter",
           value: "هذا النص هو مثال لنص يمكن أن يستبدل في نفس  النص العربى.",
           editable: false,
+          type: "url",
         },
       ],
       images: [
